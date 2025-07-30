@@ -1,1 +1,17 @@
-
+#  TransacƟon Query
+SELECT
+    u.user_id,
+    u.name,
+    u.email,
+    COUNT(o.order_id) AS total_orders,
+    SUM(o.total_amount) AS total_spent
+FROM
+   users u
+JOIN 
+   orders o ON u.user_id = o.user_id
+GROUP BY
+   u.user_id, u.name, u.email
+HAVING
+   COUNT(o.order_id) > 5 AND
+   SUM(o.total_amount) > 10000;
+   
