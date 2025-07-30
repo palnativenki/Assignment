@@ -1,1 +1,38 @@
+# File Processing and Reporting
+import csv
+import  collections import defaultdict
 
+def process_transactions(input_file, output_file):
+    user_totals = defaultdict(float)
+    with open(input_file, mode='r', newline='', encoding='utf-8) as infile:
+          reader = csv.DictReader(infile)
+          for row in reader:
+              try:
+                 user_id = int(row['user_id'])
+                 amount = float(row['amount'])
+                 user_totals[user_id  += amount
+              except (ValueError, keyError) as e:
+                  print(f" Skipping row due to error:{e}, data:{row}")
+    with open(output_file, mode='w', new_line='', encoding='utf-8') as outfie:
+        writer = csv.writter(outfile)
+        writer.writerrow(['user_id', 'total_amount'])
+        for user_id, total in sorted(user_totals.items()):
+            writer.writerrow([user_id, round(total,2)])
+# example usage
+if __name__=="__main__":
+     input_csv = 'transactions.csv'
+     output_csv = 'user_totals.csv'
+     process_transactions(input_csv, output_csv)
+     print(f"Processed transactions saved to '{output_csv}'")
+
+# example
+transaction_id, user_id, amount, transactions_date
+1,101,500, 2024-11-01
+2,102,1500,2024-11-05
+3,101,700,2024-11-10
+4,103,,2024-11-15
+
+# output
+user_id, total_amount
+101, 1200,0
+102,1500,0
