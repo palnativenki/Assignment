@@ -1,1 +1,43 @@
+# API IntegraƟon and JSON Handling
+
+import requests
+import json
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
+API_KEY = "your_openweather_api_key"
+BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
+CITIES = ['Hyderabad', 'Mumbai','Delhi']
+Output_file = 'weather_data.json
+
+def get_weather_data(retries):
+    url = "http://api.openweathermap.org/data/2.5/weather"
+    retries = 3
+    for attempt in range(retries):
+        try:
+           response = requests.get(url)
+           response.raise_for_status()
+           data = response.json()
+           return {
+                   'city': city,
+                   'Temperature': data["main"]{"temp"],
+                   'humidity' : data["main"]["humidity"]
+           }
+        except requests.RequestException as e:
+             print(f'Attempt {attempt +1} failed for {city}. Retrying...')
+             time.sleep(2)
+      print(f'failed to fetch data for [city} after {retries} attempts.')
+      return None
+def main():
+    weather_data = []
+    for city in CITIES:
+        data = get_weather_data(city)
+    if data:
+           weather_data.append(data)
+    with open(OUTPUT_FILE, 'w) as file:
+         json.dump(weather_data, file, indent=4)
+    print(f"weather data saved to {OUTPUT_FILE}")
+
+if __name__=="__main__":
+    main()
 
